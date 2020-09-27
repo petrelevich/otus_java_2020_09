@@ -1,0 +1,37 @@
+plugins {
+    //support Idea IDE
+    id 'idea'
+    id "io.spring.dependency-management" version "1.0.10.RELEASE"
+    // Build uber-jar
+    id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
+}
+
+idea {
+    project {
+        languageLevel = 15
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+allprojects {
+    group "ru.otus"
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: "io.spring.dependency-management"
+    dependencyManagement {
+        dependencies {
+            dependency("com.google.guava:guava:${Versions.guava}")
+        }
+    }
+}
+
+//gradle -q hello
+task hello {
+    println 'Hello world!'
+}
