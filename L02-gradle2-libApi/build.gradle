@@ -1,0 +1,12 @@
+plugins {
+    id 'java-library'
+}
+
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14
+
+dependencies {
+    api 'com.google.guava:guava' // случай 1
+    //implementation 'com.google.guava:guava' //случай 2
+}
+
