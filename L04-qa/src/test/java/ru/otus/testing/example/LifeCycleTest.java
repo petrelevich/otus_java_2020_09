@@ -1,4 +1,4 @@
-package ru.otus.testing.example.services;
+package ru.otus.testing.example;
 
 import org.junit.jupiter.api.*;
 
