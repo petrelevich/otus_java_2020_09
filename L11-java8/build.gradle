@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = JavaVersion.VERSION_13
+targetCompatibility = JavaVersion.VERSION_13
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    implementation 'org.checkerframework:checker:3.2.0'
+    implementation 'org.jetbrains:annotations:19.0.0'
+    implementation 'net.jcip:jcip-annotations:1.0'
+    implementation 'com.github.spotbugs:spotbugs-annotations:4.0.0'
+    implementation 'com.google.errorprone:error_prone_annotations:2.3.4'
+
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-params'
+    testImplementation group: 'org.assertj', name: 'assertj-core'
+}
+
+test {
+}
