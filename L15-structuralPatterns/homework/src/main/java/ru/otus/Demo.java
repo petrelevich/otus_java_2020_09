@@ -17,7 +17,7 @@ public class Demo {
         var listenerPrinter = new ListenerPrinter();
         complexProcessor.addListener(listenerPrinter);
 
-        var message = new Message.Builder()
+        var message = new Message.Builder(1L)
                 .field1("field1")
                 .field2("field2")
                 .field3("field3")
