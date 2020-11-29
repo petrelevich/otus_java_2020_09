@@ -1,6 +1,6 @@
 package ru.otus.processor;
 
-import ru.otus.Message;
+import ru.otus.model.Message;
 
 public class ProcessorConcatFields implements Processor {
 

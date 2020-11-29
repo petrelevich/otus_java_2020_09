@@ -1,6 +1,6 @@
 package ru.otus.handler;
 
-import ru.otus.Message;
+import ru.otus.model.Message;
 import ru.otus.listener.Listener;
 import ru.otus.processor.Processor;
 

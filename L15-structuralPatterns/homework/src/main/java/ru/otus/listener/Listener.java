@@ -1,6 +1,6 @@
 package ru.otus.listener;
 
-import ru.otus.Message;
+import ru.otus.model.Message;
 
 public interface Listener {
 

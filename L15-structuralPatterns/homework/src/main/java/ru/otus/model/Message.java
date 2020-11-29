@@ -1,4 +1,4 @@
-package ru.otus;
+package ru.otus.model;
 
 public class Message {
     private final long id;
