@@ -29,7 +29,7 @@ public class HomeWork {
         JdbcMapper<Client> jdbcMapperClient = null; //
         ClientDao clientDao = null; // = new UserDaoJdbcMapper(sessionManager, dbExecutor);
 
-// Код дальше должен остаться, т.е. userDao должен использоваться
+// Код дальше должен остаться, т.е. clientDao должен использоваться
         var dbServiceClient = new DbServiceClientImpl(clientDao);
         var id = dbServiceClient.saveClient(new Client(0, "dbServiceClient"));
         Optional<Client> clientOptional = dbServiceClient.getClient(id);
