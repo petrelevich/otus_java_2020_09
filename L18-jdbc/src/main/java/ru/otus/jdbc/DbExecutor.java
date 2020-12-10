@@ -12,4 +12,6 @@ public interface DbExecutor<T> {
     long executeInsert(Connection connection, String sql, List<Object> params) throws SQLException;
 
     Optional<T> executeSelect(Connection connection, String sql, Object id, Function<ResultSet, T> rsHandler) throws SQLException;
+
+//    List<T> executeSelect(Connection connection, String sql, Object id, Function<ResultSet, T> rsHandler) throws SQLException;
 }

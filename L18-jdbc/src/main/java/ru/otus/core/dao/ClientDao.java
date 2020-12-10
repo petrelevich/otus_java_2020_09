@@ -11,7 +11,7 @@ public interface ClientDao {
     long insert(Client client);
 
     //void update(Client user);
-    //void insertOrUpdate(Client user);
+    //long insertOrUpdate(Client user);
 
     SessionManager getSessionManager();
 }
