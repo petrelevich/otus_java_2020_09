@@ -9,4 +9,6 @@ public interface DBServiceClient {
     long saveClient(Client client);
 
     Optional<Client> getClient(long id);
+
+    //List<Client> findAll();
 }

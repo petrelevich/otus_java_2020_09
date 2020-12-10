@@ -12,4 +12,5 @@ public interface JdbcMapper<T> {
     void insertOrUpdate(T objectData);
 
     T findById(Object id, Class<T> clazz);
+//    List<T> findAll(Class<T> clazz);
 }
