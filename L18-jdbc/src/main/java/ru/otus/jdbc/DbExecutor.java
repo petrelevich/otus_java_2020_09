@@ -13,5 +13,6 @@ public interface DbExecutor<T> {
 
     Optional<T> executeSelect(Connection connection, String sql, Object id, Function<ResultSet, T> rsHandler) throws SQLException;
 
-//    List<T> executeSelect(Connection connection, String sql, Object id, Function<ResultSet, T> rsHandler) throws SQLException;
+    //для получения всех записей params должен быть пустым массивом
+    //List<T> executeSelect(Connection connection, String sql, Object[] params, Function<ResultSet, T> rsHandler) throws SQLException;
 }
