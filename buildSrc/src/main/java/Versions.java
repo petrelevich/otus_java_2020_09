@@ -6,6 +6,6 @@ public interface Versions {
     String glassfishJson = "1.1.4";
     String protobuf = "3.12.1";
     String flyway = "6.4.4";
-    String testcontainers = "1.13.0";
+    String testcontainers = "1.14.3";
     String postgresql = "42.2.5";
 }
