@@ -6,7 +6,6 @@ import org.hibernate.proxy.HibernateProxy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.otus.base.AbstractHibernateTest;
@@ -19,10 +18,10 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("Демо работы с hibernate (без абстракций) должно ")
 class WithoutAbstractionsTest extends AbstractHibernateTest {
 
-    @DisplayName(" корректно сохранять и загружать клиента выполяняя заданное кол-во запросов в нужное время")
-    @ParameterizedTest(name = "пользователь отключен от контекста (detached) перед загрузкой: {0}")
+    @DisplayName(" корректно сохранять и загружать клиента выполняя заданное кол-во запросов в нужное время")
+    @ParameterizedTest(name = "клиент отключен от контекста (detached) перед загрузкой: {0}")
     @ValueSource(booleans = {false, true})
-    void shouldCorrectSaveAndLoadClientWithExpectedQueriesCount(boolean userDetachedBeforeGet) {
+    void shouldCorrectSaveAndLoadClientWithExpectedQueriesCount(boolean clientDetachedBeforeGet) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
@@ -38,7 +37,7 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
 
             // Мы не ожидаем ни одного обращения к БД для загрузки клиента если он не отсоединен от контекста
             long expectedLoadCount = 0;
-            if (userDetachedBeforeGet) {
+            if (clientDetachedBeforeGet) {
                 session.detach(savedClient);
                 // И ожидаем обращения к БД для загрузки если клиента в контексте нет
                 expectedLoadCount = 1;
@@ -65,7 +64,7 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
             Client loadedClient = session.get(Client.class, savedClient.getId());
 
             // Проверка, что для получения клиента было сделано обращение к БД
-            // (т.е. пользователь не сохранился в контексте при смене сессии)
+            // (т.е. клиент не сохранился в контексте при смене сессии)
             assertThat(getUsageStatistics().getLoadCount()).isEqualTo(1);
 
             // И что мы достали того же клиента, что сохраняли
@@ -75,36 +74,34 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
 
     @DisplayName(" показывать в каких случаях загруженный с помощью load объект является прокси для сценария: ")
     @ParameterizedTest(name = "{2}")
-    @CsvSource({"true, false, пользователь не существует ",
-            "false, false, пользователь существует и он persistent",
-            "false, true, пользователь существует и он detached"})
-    void shouldLoadProxyObjectWithLoadMethod(ArgumentsAccessor arguments) {
-        boolean loadedNotExistingUser = arguments.getBoolean(0);
-        boolean userDetachedBeforeLoad = arguments.getBoolean(1);
+    @CsvSource({"true, false, клиент не существует ",
+            "false, false, клиент существует и он persistent",
+            "false, true, клиент существует и он detached"})
+        void shouldLoadProxyObjectWithLoadMethod(boolean loadedNotExistingClient, boolean clientDetachedBeforeLoad, String scenarioDescription) {
 
         Client savedClient = buildDefaultClient();
         try (Session session = sessionFactory.openSession()) {
             // Сохранили клиента в рамках текущей сессии
             saveClient(session, savedClient);
 
-            if (userDetachedBeforeLoad) {
-                // Отсоединили клиента от контекста если это нужно по текщему сценарию
+            if (clientDetachedBeforeLoad) {
+                // Отсоединили клиента от контекста если это нужно по текущему сценарию
                 session.detach(savedClient);
             }
 
             // Если по сценарию нужно загружать клиента не существующего в БД, выставляем id=-1
-            long id = loadedNotExistingUser ? -1L : savedClient.getId();
+            long id = loadedNotExistingClient ? -1L : savedClient.getId();
             Client loadedClient = session.load(Client.class, id);
 
             // Метод load должен вернуть клиента не зависимо от того, существует ли он в БД или нет
             assertThat(loadedClient).isNotNull();
 
-            if (loadedNotExistingUser || userDetachedBeforeLoad) {
-                // Если загружен не существующий в БД пользователь или он был отсоединен от конетекста, то загруженный объект д.б. Proxy
+            if (loadedNotExistingClient || clientDetachedBeforeLoad) {
+                // Если загружен не существующий в БД клиент или он был отсоединен от контекста, то загруженный объект д.б. Proxy
                 assertThat(loadedClient).isInstanceOf(HibernateProxy.class);
 
-                // Если загружен не существующий в БД пользователь обращение к полю должно привести к ObjectNotFoundException
-                if (loadedNotExistingUser) {
+                // Если загружен не существующий в БД клиент обращение к полю должно привести к ObjectNotFoundException
+                if (loadedNotExistingClient) {
                     assertThatThrownBy(loadedClient::getName).isInstanceOf(ObjectNotFoundException.class);
                 } else {
                     assertThatCode(loadedClient::getName).doesNotThrowAnyException();
@@ -144,7 +141,7 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
             Client savedClient = buildDefaultClient();
             saveClient(session, savedClient);
 
-            // Заргузка с помощью метода get не существующего в БД клиента должна приводить к возврату null
+            // Загрузка с помощью метода get не существующего в БД клиента должна приводить к возврату null
             assertThat(session.get(Client.class, -1L)).isNull();
 
             // Метод get для существующего в БД клиента должен вернуть объект клиента не являющегося прокси
@@ -199,7 +196,7 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
             // Еще раз сохранили
             saveClient(session, savedClient);
 
-            // Проверка, что второй раз сохраненный пользователь имеет новый id
+            // Проверка, что второй раз сохраненный клиент имеет новый id
             assertThat(id).isNotEqualTo(savedClient.getId());
         }
     }
@@ -225,7 +222,7 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
 
             Client loadedClient = loadClient(id);
 
-            // Проверка, что второй раз сохраненный пользователь имеет тот же id
+            // Проверка, что второй раз сохраненный клиент имеет тот же id
             assertThat(loadedClient).usingRecursiveComparison().isEqualTo(savedClient);
         }
     }
@@ -267,13 +264,13 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
             session.getTransaction().commit();
             // И сессию
         }
-        // Заргрузили клиента в новой сессии
+        // Загрузили клиента в новой сессии
         Client loadedClient = loadClient(savedClient.getId());
-        // Проверка, что имя загруженного пользвателя соответствует тому, что дали после сохранения
+        // Проверка, что имя загруженного клиента соответствует тому, что дали после сохранения
         assertThat(loadedClient.getName()).isEqualTo(TEST_CLIENT_NEW_NAME);
     }
 
-    @DisplayName(" показывать, что удаленный через HQL persistent объект остется в сессии, но удаляется в БД")
+    @DisplayName(" показывать, что удаленный через HQL persistent объект остается в сессии, но удаляется в БД")
     @Test
     void shouldNotDetachPersistentEntityWhenRemoveWithHQLQuery() {
         Client savedClient = buildDefaultClient();
@@ -288,18 +285,18 @@ class WithoutAbstractionsTest extends AbstractHibernateTest {
             query.setParameter(1, savedClient.getId());
             query.executeUpdate();
 
-            // Заргрузили клиента
+            // Загрузили клиента
             Client loadedClient = session.get(Client.class, savedClient.getId());
-            // Проверка, что загруженный пользователь не null и равен сохраненному ранее
+            // Проверка, что загруженный клиент не null и равен сохраненному ранее
             assertThat(loadedClient).isNotNull().usingRecursiveComparison().isEqualTo(savedClient);
 
             // Отсоединили клиента от контекста
             session.detach(savedClient);
 
-            // Заргрузили клиента еще раз
+            // Загрузили клиента еще раз
             loadedClient = session.get(Client.class, savedClient.getId());
 
-            // Проверка, что загруженный пользователь null
+            // Проверка, что загруженный клиент null
             assertThat(loadedClient).isNull();
 
             session.getTransaction().commit();

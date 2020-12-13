@@ -30,7 +30,7 @@ class WithAbstractionsTest extends AbstractHibernateTest {
     }
 
     @Test
-    @DisplayName(" корректно сохранять пользователя")
+    @DisplayName(" корректно сохранять клиента")
     void shouldCorrectSaveClient() {
         Client savedClient = buildDefaultClient();
         long id = dbServiceClient.saveClient(savedClient);
@@ -43,21 +43,21 @@ class WithAbstractionsTest extends AbstractHibernateTest {
     }
 
     @Test
-    @DisplayName(" корректно загружать пользователя")
+    @DisplayName(" корректно загружать клиента")
     void shouldLoadCorrectClient() {
         Client savedClient = buildDefaultClient();
         saveClient(savedClient);
 
-        Optional<Client> mayBeUser = dbServiceClient.getClient(savedClient.getId());
+        Optional<Client> mayBeClient = dbServiceClient.getClient(savedClient.getId());
 
-        assertThat(mayBeUser).isPresent().get().usingRecursiveComparison().isEqualTo(savedClient);
+        assertThat(mayBeClient).isPresent().get().usingRecursiveComparison().isEqualTo(savedClient);
 
         System.out.println(savedClient);
-        mayBeUser.ifPresent(System.out::println);
+        mayBeClient.ifPresent(System.out::println);
     }
 
     @Test
-    @DisplayName(" корректно изменять ранее сохраненного пользователя")
+    @DisplayName(" корректно изменять ранее сохраненного клиента")
     void shouldCorrectUpdateSavedClient() {
         Client savedClient = buildDefaultClient();
         saveClient(savedClient);

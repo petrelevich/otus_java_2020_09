@@ -25,7 +25,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 
-@DisplayName("Сервис для работы с пользователями в рамках БД должен ")
+@DisplayName("Сервис для работы с клиентами в рамках БД должен ")
 @ExtendWith(MockitoExtension.class)
 class DbServiceClientImplTest {
 
@@ -69,7 +69,7 @@ class DbServiceClientImplTest {
     }
 
     @Test
-    @DisplayName(" при сохранении пользователя, открывать и откатывать транзакцию в нужном порядке")
+    @DisplayName(" при сохранении клиента, открывать и откатывать транзакцию в нужном порядке")
     void shouldOpenAndRollbackTranWhenExceptionInExpectedOrder() {
         doThrow(IllegalArgumentException.class).when(clientDao).insertOrUpdate(any());
 
@@ -84,7 +84,7 @@ class DbServiceClientImplTest {
     }
 
     @Test
-    @DisplayName(" корректно загружать пользователя по заданному id")
+    @DisplayName(" корректно загружать клиента по заданному id")
     void shouldLoadCorrectClientById() {
         Client expectedClient = new Client(CLIENT_ID, "Вася");
         given(clientDao.findById(CLIENT_ID)).willReturn(Optional.of(expectedClient));

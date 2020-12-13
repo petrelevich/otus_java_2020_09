@@ -14,6 +14,11 @@ public final class HibernateUtils {
     private HibernateUtils() {
     }
 
+    public static SessionFactory buildSessionFactory(String hibernateConfigFile, Class<?>... annotatedClasses) {
+        Configuration configuration = new Configuration().configure(hibernateConfigFile);
+        return buildSessionFactory(configuration, annotatedClasses);
+    }
+
     public static SessionFactory buildSessionFactory(Configuration configuration, Class<?>... annotatedClasses) {
         MetadataSources metadataSources = new MetadataSources(createServiceRegistry(configuration));
         Arrays.stream(annotatedClasses).forEach(metadataSources::addAnnotatedClass);

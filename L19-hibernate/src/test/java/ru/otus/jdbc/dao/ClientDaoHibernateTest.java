@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
-@DisplayName("Dao для работы с пользователями должно ")
+@DisplayName("Dao для работы с клиентами должно ")
 class ClientDaoHibernateTest extends AbstractHibernateTest {
 
     private SessionManagerHibernate sessionManagerHibernate;
@@ -27,8 +27,8 @@ class ClientDaoHibernateTest extends AbstractHibernateTest {
     }
 
     @Test
-    @DisplayName(" корректно загружать пользователя по заданному id")
-    void shouldFindCorrectUserById() {
+    @DisplayName(" корректно загружать клиента по заданному id")
+    void shouldFindCorrectClientById() {
         Client expectedClient = new Client(0, "Вася");
         saveClient(expectedClient);
 
@@ -41,9 +41,9 @@ class ClientDaoHibernateTest extends AbstractHibernateTest {
         assertThat(mayBeClient).isPresent().get().isEqualToComparingFieldByField(expectedClient);
     }
 
-    @DisplayName(" корректно сохранять пользователя")
+    @DisplayName(" корректно сохранять клиента")
     @Test
-    void shouldCorrectSaveUser() {
+    void shouldCorrectSaveClient() {
         Client expectedClient = new Client(0, "Вася");
         sessionManagerHibernate.beginSession();
         clientDaoHibernate.insertOrUpdate(expectedClient);
