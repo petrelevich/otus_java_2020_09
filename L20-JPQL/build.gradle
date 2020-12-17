@@ -10,6 +10,7 @@ dependencies {
     implementation("org.hibernate:hibernate-core")
     implementation("com.zaxxer:HikariCP")
 
+    implementation("com.h2database:h2")
     implementation("org.postgresql:postgresql")
 
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
