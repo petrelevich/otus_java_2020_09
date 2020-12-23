@@ -8,4 +8,14 @@ public interface Versions {
     String flyway = "6.4.4";
     String testcontainers = "1.14.3";
     String postgresql = "42.2.5";
+
+    String lombok = "1.18.16";
+    String gson = "2.8.6";
+
+
+    String mongodb = "4.1.1";
+    String mongodbReactive = "4.1.1";
+    String cassandra = "4.9.0";
+    String neo4j = "4.2.0";
+    String jedis = "3.4.0";
 }

@@ -1,0 +1,6 @@
+rootProject.name = 'L22-noSQL'
+include 'cassandra-demo'
+include 'mongo-db-demo'
+include 'mongo-db-reactive-demo'
+include 'neo4j-demo'
+include 'redis-demo'

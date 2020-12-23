@@ -1,0 +1,16 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = JavaVersion.VERSION_13
+targetCompatibility = JavaVersion.VERSION_13
+
+dependencies {
+
+    implementation("ch.qos.logback:logback-classic")
+    implementation("org.projectlombok:lombok:${Versions.lombok}")
+    annotationProcessor("org.projectlombok:lombok:${Versions.lombok}")
+    implementation("com.google.code.gson:gson:${Versions.gson}")
+
+    implementation("redis.clients:jedis:${Versions.jedis}")
+}
