@@ -31,7 +31,7 @@ class ClientRestControllerStandaloneTest {
     }
 
     @Test
-    void getUserById() throws Exception {
+    void getClientById() throws Exception {
         Client expectedClient = new Client(1, "Vasya");
         Gson gson = new GsonBuilder().create();
         given(clientService.findById(1L)).willReturn(expectedClient);

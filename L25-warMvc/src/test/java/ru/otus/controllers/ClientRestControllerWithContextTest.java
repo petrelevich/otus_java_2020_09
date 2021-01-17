@@ -35,7 +35,7 @@ class ClientRestControllerWithContextTest {
     }
 
     @Test
-    void getUserById() throws Exception {
+    void getClientById() throws Exception {
         Gson gson = new GsonBuilder().create();
         Client expectedClient = new Client(1, "Крис Гир");
         mvc.perform(get("/api/client/{id}", 1L))
