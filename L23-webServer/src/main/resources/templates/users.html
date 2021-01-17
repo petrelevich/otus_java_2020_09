@@ -6,10 +6,10 @@
             const userIdTextBox = document.getElementById('userIdTextBox');
             const userDataContainer = document.getElementById('userDataContainer');
             const id = userIdTextBox.value;
-            //fetch('api/user?id=' + id)
-            fetch('api/user/' + id)
+            //fetch('api/client?id=' + id)
+            fetch('api/client/' + id)
                 .then(response => response.json())
-                .then(user => userDataContainer.innerHTML = JSON.stringify(user));
+                .then(client => userDataContainer.innerHTML = JSON.stringify(client));
         }
     </script>
 </head>
