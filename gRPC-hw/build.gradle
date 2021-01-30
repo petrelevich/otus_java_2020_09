@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id "com.google.protobuf" version "0.8.12"
+    id 'idea'
+}
+
+sourceCompatibility = JavaVersion.VERSION_15
+targetCompatibility = JavaVersion.VERSION_15
+
+dependencies {
+    implementation 'ch.qos.logback:logback-classic'
+
+    implementation 'io.grpc:grpc-netty:1.30.2'
+    implementation 'io.grpc:grpc-protobuf:1.30.2'
+    implementation 'io.grpc:grpc-stub:1.30.2'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+}
+
+def protoSrcDir = "${projectDir}/build/generated"
+def grpcSrcDir = "${project.projectDir}/build/generated/grpc"
+
+idea {
+    module {
+        sourceDirs += file(protoSrcDir);
+    }
+}
+
+sourceSets {
+    main {
+        proto {
+            srcDir protoSrcDir
+        }
+        java {
+            srcDir grpcSrcDir
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.12.1'
+    }
+
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.30.2'
+
+        }
+    }
+
+    generatedFilesBaseDir = protoSrcDir
+    generateProtoTasks {
+        ofSourceSet('main')*.plugins { grpc {} }
+    }
+}
+
+test {}

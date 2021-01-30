@@ -36,3 +36,5 @@ include 'L25-warMvc'
 include 'L26-websocket'
 include 'L27-threads'
 include 'L28-JMM'
+
+include 'gRPC-hw'
