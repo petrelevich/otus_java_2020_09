@@ -37,3 +37,7 @@ include 'L26-websocket'
 include 'L27-threads'
 include 'L28-JMM'
 include 'L29-executors'
+
+include 'L30-messagingSystem:ConcurrentCollections'
+include 'L30-messagingSystem:MessageSystem'
+include 'L30-messagingSystem:MessageSystemApp'

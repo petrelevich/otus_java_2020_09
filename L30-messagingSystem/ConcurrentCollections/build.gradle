@@ -1,0 +1,31 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = JavaVersion.VERSION_13
+targetCompatibility = JavaVersion.VERSION_13
+
+dependencies {
+    implementation("org.apache.commons:commons-lang3")
+    implementation("ch.qos.logback:logback-classic")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("org.assertj:assertj-core")
+    testImplementation("org.mockito:mockito-junit-jupiter")
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}
