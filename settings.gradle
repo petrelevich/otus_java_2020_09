@@ -41,3 +41,8 @@ include 'L29-executors'
 include 'L30-messagingSystem:ConcurrentCollections'
 include 'L30-messagingSystem:MessageSystem'
 include 'L30-messagingSystem:MessageSystemApp'
+
+include 'L31-multiprocess:processes-demo'
+include 'L31-multiprocess:sockets-demo'
+include 'L31-multiprocess:rmi-demo'
+include 'L31-multiprocess:grpc-demo'
